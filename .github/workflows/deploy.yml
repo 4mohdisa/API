@@ -2,22 +2,16 @@ name: Python App Deployment
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
+  build:
     name: Deploy to Server
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up SSH key
-      run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-
-    - name: SSH into the server and deploy
+    - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
@@ -25,9 +19,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: 22
         script: |
-          cd social
+          cd /social
           git pull origin main  
           pip install -r requirements.txt
           python manage.py
-          
-
