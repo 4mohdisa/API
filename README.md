@@ -30,13 +30,14 @@ $ python3 -m pip install -r requirements.txt
 
 ### Run API Server
 
-```sh
+
 # propagate modules
-$ python3 manage.py migrate
+python3 manage.py migrate
 
 # in the root of project diretory..
-$ python3 manage.py runserver 0.0.0.0:8000
-```
+python3 manage.py runserver 0.0.0.0:8000
+nohup python3 manage.py runserver 0.0.0.0:8000 &
+
 
 Start you browser and type [127.0.0.1:8000](http://127.0.0.1:8000/) in as
 your target URL and hit return.
