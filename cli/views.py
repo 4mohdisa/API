@@ -9,47 +9,47 @@ import json
 from django.http import HttpResponse, JsonResponse
 import threading
 
-class CliView(APIView):
-    """Pass in command directly to sherlock."""
-    def post(self, request):
-        data = json.loads(request.body)
-        args = data['args']
+# class CliView(APIView):
+#     """Pass in command directly to sherlock."""
+#     def post(self, request):
+#         data = json.loads(request.body)
+#         args = data['args']
 
-        if valid_args(args) == False:
-            output = "Invalid argument string"
-        # else:
-        #     full_cmd = f"{py_command()} {sherlock_dir()}/sherlock {args}"
-        #     proc = Popen(full_cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
-        #     outs, errs = proc.communicate()
-        #     output = outs if outs else errs
+#         if valid_args(args) == False:
+#             output = "Invalid argument string"
+#         # else:
+#         #     full_cmd = f"{py_command()} {sherlock_dir()}/sherlock {args}"
+#         #     proc = Popen(full_cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+#         #     outs, errs = proc.communicate()
+#         #     output = outs if outs else errs
 
-        else:
-            full_cmd = f"{py_command()} {sherlock_dir()}/sherlock {args}"
-            proc = Popen(full_cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
-            outs, errs = proc.communicate()
+#         else:
+#             full_cmd = f"{py_command()} {sherlock_dir()}/sherlock {args}"
+#             proc = Popen(full_cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+#             outs, errs = proc.communicate()
 
-        if outs:
-                # Split the output by line and create a list of sites
-                sites = outs.decode().strip().split('\n')
+#         if outs:
+#                 # Split the output by line and create a list of sites
+#                 sites = outs.decode().strip().split('\n')
 
-                # Create a dictionary with site names as keys and results as values
-                site_results = []
-                for site in sites:
-                    print(site)
+#                 # Create a dictionary with site names as keys and results as values
+#                 site_results = []
+#                 for site in sites:
+#                     print(site)
                     
-                    if ': ' in site:
-                        site_name, site_link = site.split(': ', 1)
-                        site_entry = {
-                            "name": site_name.lstrip('[+] '),
-                            "link": site_link
-                        }
-                        site_results.append(site_entry)
+#                     if ': ' in site:
+#                         site_name, site_link = site.split(': ', 1)
+#                         site_entry = {
+#                             "name": site_name.lstrip('[+] '),
+#                             "link": site_link
+#                         }
+#                         site_results.append(site_entry)
 
-                output = {"results": site_results}
-        else:
-                output = {"error": errs.decode()}
+#                 output = {"results": site_results}
+#         else:
+#                 output = {"error": errs.decode()}
 
-        return JsonResponse(output)
+#         return JsonResponse(output)
 
 class DataView(APIView):
     """Request JSON data from sherlock resources."""

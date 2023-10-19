@@ -1,2 +1,4 @@
 djangorestframework>=3.12.2
 django-cors-headers>=3.6.0
+channels>=3.0.4
+channels-redis>=3.3.1
